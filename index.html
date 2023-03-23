@@ -9,36 +9,122 @@
 </head>
 <body>
 	<header>
-		<h1>Bienvenidos a mi página informativa</h1>
+		<h1>IR RECEIVER</h1>
 	</header>
 
 	<nav>
 		<ul>
-			<li><a href="#seccion1">Sección 1</a></li>
-			<li><a href="#seccion2">Sección 2</a></li>
-			<li><a href="#seccion3">Sección 3</a></li>
+			<li><a href="https://wokwi.com/projects/359943156473502721">Mirar prueba IR RECEIVER</a></li>
 		</ul>
 	</nav>
 
 	<main>
 		<section id="seccion1">
-			<h2>Sección 1</h2>
-			<p>Esta es la primera sección de mi página informativa.</p>
-		</section>
+  <h2>Receptor de infrarrojo</h2>
+  <p>Un receptor de infrarrojos (IR receiver) es un dispositivo que detecta las señales de infrarrojos emitidas por un emisor de infrarrojos, como un control remoto. El receptor de infrarrojos convierte las señales de infrarrojos en señales eléctricas que pueden ser procesadas por un dispositivo electrónico, como un televisor, una computadora o un microcontrolador.</p>
 
+  <p>Los receptores de infrarrojos se utilizan comúnmente en dispositivos electrónicos para permitir el control remoto. Cuando se pulsa un botón en un control remoto, este envía una señal de infrarrojos que es detectada por el receptor de infrarrojos en el dispositivo que se quiere controlar. El receptor de infrarrojos envía entonces la señal al procesador del dispositivo, que realiza la acción correspondiente, como cambiar de canal o ajustar el volumen.</p>
+
+  <p>Los receptores de infrarrojos pueden ser integrados en muchos dispositivos electrónicos, como televisores, reproductores de DVD, sistemas de sonido, entre otros. También existen módulos de receptor de infrarrojos que se pueden conectar a un microcontrolador, como una Raspberry Pi, para permitir el control remoto de proyectos electrónicos.</p>
+</section>
 		<section id="seccion2">
 			<h2>Sección 2</h2>
-			<p>Esta es la segunda sección de mi página informativa.</p>
+			<p>El receptor de infrarrojos de 38KHz es un tipo común de receptor de infrarrojos utilizado para la comunicación por infrarrojos en dispositivos electrónicos, como controles remotos de televisores y otros aparatos. El receptor de infrarrojos de 38KHz puede detectar señales infrarrojas que operan a una frecuencia de 38 kilohertzios, que es la frecuencia típica utilizada por muchos controles remotos.</p>
+
+<p>En cuanto al Raspberry Pi Pico, este dispositivo también es capaz de trabajar con receptores de infrarrojos de 38KHz, mediante la utilización de los pines GPIO. Para trabajar con este tipo de receptor en un proyecto con Raspberry Pi Pico, es necesario conectar el receptor a un pin GPIO del Pico, siguiendo las instrucciones del datasheet del receptor.</p>
+
+<p>Una vez conectado el receptor de infrarrojos, es necesario programar el Raspberry Pi Pico para que pueda leer y procesar las señales recibidas. Esto se puede hacer utilizando una biblioteca de software, como por ejemplo la biblioteca IRremote, que proporciona una interfaz fácil de usar para trabajar con receptores de infrarrojos de 38KHz en proyectos con Raspberry Pi Pico.</p>
+
+<p>En resumen, el receptor de infrarrojos de 38KHz es un dispositivo comúnmente utilizado en la 
+	comunicación por infrarrojos, y se puede trabajar con él en proyectos con Raspberry Pi
+	Pico utilizando los pines GPIO y una biblioteca de software adecuada.</p>
+
+
 		</section>
 
 		<section id="seccion3">
 			<h2>Sección 3</h2>
-			<p>Esta es la tercera sección de mi página informativa.</p>
-		</section>
+			<p>Ejemplo de codigo en el simulador de Wokwi.com utlizando la Raspberry pi pico</p>
+			
+			<p>A continuación se muestra el código Python:</p>
+    <pre>
+      <code>
+    import time
+from machine import Pin, freq
+from ir_rx.print_error import print_error
+from ir_rx.nec import NEC_8
+
+pin_ir = Pin(17, Pin.IN)
+
+def decodeKeyValue(data):
+    if data == 0x16:
+        return "0"
+    if data == 0x0C:
+        return "1"
+    if data == 0x18:
+        return "2"
+    if data == 0x5E:
+        return "3"
+    if data == 0x08:
+        return "4"
+    if data == 0x1C:
+        return "5"
+    if data == 0x5A:
+        return "6"
+    if data == 0x42:
+        return "7"
+    if data == 0x52:
+        print("123")
+        return "8"
+    if data == 0x4A:
+        return "9"
+    if data == 0x09:
+        return "+"
+    if data == 0x15:
+        return "-"
+    if data == 0x7:
+        return "EQ"
+    if data == 0x0D:
+        return "U/SD"
+    if data == 0x19:
+        return "CYCLE"
+    if data == 0x44:
+        return "PLAY/PAUSE"
+    if data == 0x43:
+        return "FORWARD"
+    if data == 0x40:
+        return "BACKWARD"
+    if data == 0x45:
+        return "POWER"
+    if data == 0x47:
+        return "MUTE"
+    if data == 0x46:
+        return "MODE"
+    return "ERROR"
+
+# User callback
+def callback(data, addr, ctrl):
+    if data < 0:  # NEC protocol sends repeat codes.
+        pass
+    else:
+        print(decodeKeyValue(data))
+
+ir = NEC_8(pin_ir, callback)  # Instantiate receiver
+ir.error_function(print_error)  # Show debug information
+
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    ir.close()
+
+      </code>
+    </pre>
+					</section>
 	</main>
 
 	<footer>
-		<p>© 2023 - Mi Página Informativa</p>
+		<p>© 2023 - Lara Segovia Jonathan</p>
 	</footer>
 
 </body>
